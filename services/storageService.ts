@@ -65,10 +65,12 @@ export const exportDataToJSON = () => {
   const readings = getReadings();
   const subMeters = getSubMeters();
   const subReadings = getSubReadings();
+  const apiKey = localStorage.getItem('ecotrack_gemini_key');
+
   const backup = {
     version: 1,
     timestamp: Date.now(),
-    data: { meters, readings, subMeters, subReadings }
+    data: { meters, readings, subMeters, subReadings, apiKey }
   };
   return JSON.stringify(backup, null, 2);
 };
@@ -93,12 +95,12 @@ export const importDataFromJSON = (jsonString: string): { success: boolean; mess
       dataToImport = parsed.data;
     }
 
-    const { meters, readings, subMeters, subReadings } = dataToImport;
+    const { meters, readings, subMeters, subReadings, apiKey } = dataToImport;
 
     // Validation: At least one known key must exist to be considered valid
     // Checks for both English (internal) and Spanish (export) keys
     if (!meters && !readings && !subMeters && !subReadings &&
-      !dataToImport.contadores && !dataToImport.lecturas) {
+      !dataToImport.contadores && !dataToImport.lecturas && !apiKey) {
       // Fallback: check if the parsed object IS an array of meters (legacy simple export? unlikely but safe)
       if (!Array.isArray(parsed)) {
         return { success: false, message: "No se encontraron datos reconocibles (contadores, lecturas, etc)." };
@@ -136,6 +138,11 @@ export const importDataFromJSON = (jsonString: string): { success: boolean; mess
 
     if (rawSubMeters && Array.isArray(rawSubMeters)) saveSubMeters(rawSubMeters);
     if (rawSubReadings && Array.isArray(rawSubReadings)) saveSubReadings(rawSubReadings);
+
+    // Import API Key if present
+    if (apiKey && typeof apiKey === 'string') {
+      localStorage.setItem('ecotrack_gemini_key', apiKey);
+    }
 
     return { success: true };
   } catch (e) {
