@@ -1,0 +1,5 @@
+{
+  "name": "ESTUDIO ENERGETICO IPS",
+  "description": "Aplicación avanzada para el seguimiento de consumo eléctrico, gestión de contadores, exportación de datos y predicciones de ahorro mediante IA.",
+  "requestFramePermissions": []
+}

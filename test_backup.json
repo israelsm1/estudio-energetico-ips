@@ -1,0 +1,14 @@
+{
+    "meters": [
+        {
+            "id": "test-meter-1",
+            "name": "Contador Test",
+            "cups": "ES12345678901234567890",
+            "tariff": "2.0TD",
+            "power": 3.45
+        }
+    ],
+    "readings": [],
+    "subMeters": [],
+    "subReadings": []
+}
