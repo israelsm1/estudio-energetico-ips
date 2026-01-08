@@ -5,5 +5,9 @@ dist-ssr
 .DS_Store
 .env
 .vercel
+Clave Api.txt
+test_backup.json
+public/user_backup.json
+*.bak
 
 .vercel
